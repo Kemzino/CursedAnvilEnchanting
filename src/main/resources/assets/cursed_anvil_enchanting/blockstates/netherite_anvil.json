@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "cursed_anvil_enchanting:block/netherite_anvil" },
+    "facing=south": { "model": "cursed_anvil_enchanting:block/netherite_anvil", "y": 180 },
+    "facing=west": { "model": "cursed_anvil_enchanting:block/netherite_anvil", "y": 270 },
+    "facing=east": { "model": "cursed_anvil_enchanting:block/netherite_anvil", "y": 90 }
+  }
+}

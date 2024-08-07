@@ -1,32 +1,29 @@
 {
 	"schemaVersion": 1,
-	"id": "cursed-anvil-enchanting",
+	"id": "cursed_anvil_enchanting",
 	"version": "${version}",
 	"name": "Cursed Anvil Enchanting",
-	"description": "New way to meet cursed enchantments in the game through anvil",
+	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Kemzino"
+		"Me!"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/cursed-anvil-enchanting/icon.png",
+	"icon": "assets/cursed_anvil_enchanting/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.kemzino.cae.CursedAnvilEnchanting"
-		],
-		"client": [
-			"com.kemzino.cae.CursedAnvilEnchantingClient"
+			"net.kemzino.cae.CursedAnvilEnchanting"
 		],
 		"fabric-datagen": [
-			"com.kemzino.cae.CursedAnvilEnchantingDataGenerator"
+			"net.kemzino.cae.CursedAnvilEnchantingDataGenerator"
 		]
 	},
 	"mixins": [
-		"cursed-anvil-enchanting.mixins.json"
+		"cursed_anvil_enchanting.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.11",
