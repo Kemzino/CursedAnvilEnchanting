@@ -33,5 +33,12 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom": {
+		"fabric-networking": {
+			"id": [
+				"cursed_anvil_enchanting:add_unbreaking"
+			]
+		}
 	}
 }
