@@ -20,7 +20,5 @@ public class CursedAnvilEnchanting implements ModInitializer {
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
 		ModEvents.registerEvents();
-
-		//ModNetworks.registerNetworks();
 	}
 }
