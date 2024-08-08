@@ -2,6 +2,7 @@ package net.kemzino.cae.event;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.kemzino.cae.CursedAnvilEnchanting;
+import net.kemzino.cae.config.ModConfigs;
 import net.kemzino.cae.service.EnchantmentService;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
@@ -17,8 +18,8 @@ public class AnvilEventHandler {
     private static ItemStack lastItemStackSlot1 = ItemStack.EMPTY;
     private static ItemStack lastItemStackSlot2 = ItemStack.EMPTY;
     private static ItemStack lastCursorStack = ItemStack.EMPTY;
+    private static int lastLevelCost = 0;
     private static boolean enchantState = false;
-    private static final double chanceModificator = 2.5;
 
     public static void register() {
 
@@ -26,44 +27,48 @@ public class AnvilEventHandler {
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                 if (player.currentScreenHandler instanceof AnvilScreenHandler) {
                     AnvilScreenHandler anvilScreenHandler = (AnvilScreenHandler) player.currentScreenHandler;
+                    CursedAnvilEnchanting.LOGGER.info("" + lastLevelCost);
+                        ItemStack currentItemStackSlot0 = anvilScreenHandler.getSlot(0).getStack();
+                        ItemStack currentItemStackSlot1 = anvilScreenHandler.getSlot(1).getStack();
+                        ItemStack resultStack = anvilScreenHandler.getSlot(2).getStack();
+                        ItemStack cursorStack = player.currentScreenHandler.getCursorStack();
 
-                    ItemStack currentItemStackSlot0 = anvilScreenHandler.getSlot(0).getStack();
-                    ItemStack currentItemStackSlot1 = anvilScreenHandler.getSlot(1).getStack();
-                    ItemStack resultStack = anvilScreenHandler.getSlot(2).getStack();
-                    ItemStack cursorStack = player.currentScreenHandler.getCursorStack();
-
-                    double enchantmentChance = (double) (anvilScreenHandler.getLevelCost() * chanceModificator) / 100;
+                        double enchantmentChance = (double) (anvilScreenHandler.getLevelCost() * ModConfigs.CURSE_ENCHANT_CHANCE_MODIFICATION) / 100;
 
 
-                    if (resultStack.isEmpty() && enchantTryFlag && ItemStack.areItemsEqual(cursorStack, lastItemStackSlot2)) {
+                        if (resultStack.isEmpty() && enchantTryFlag && ItemStack.areItemsEqual(cursorStack, lastItemStackSlot2)) {
 
-                        enchantTryFlag = false;
-                        if (enchantState && EnchantmentService.isEnchantedBook(lastItemStackSlot1) || lastItemStackSlot1.isEnchantable()) {
+                            enchantTryFlag = false;
+                            if (enchantState && EnchantmentService.isEnchantedBook(lastItemStackSlot1) || lastItemStackSlot1.isEnchantable()) {
 
-                            Enchantment enchantmentToApply = EnchantmentService.getRandomCurseEnchantmentFromList(EnchantmentService.getApplicableCurseEnchantments(cursorStack));
-                            cursorStack.addEnchantment(enchantmentToApply, 1);
+                                Enchantment enchantmentToApply = EnchantmentService.getRandomCurseEnchantmentFromList(EnchantmentService.getApplicableCurseEnchantments(cursorStack));
+                                if (lastLevelCost > ModConfigs.MIN_REQUIRED_LVL_TO_CURSE_ENCHANT) {
+                                    CursedAnvilEnchanting.LOGGER.info("makaka" + lastLevelCost);
+                                    cursorStack.addEnchantment(enchantmentToApply, 1);
+                                }
 
-                            player.currentScreenHandler.setCursorStack(cursorStack);
-                            player.playerScreenHandler.sendContentUpdates();
+                                player.currentScreenHandler.setCursorStack(cursorStack);
+                                player.playerScreenHandler.sendContentUpdates();
+                            }
+                        }
+
+                        if (!ItemStack.areEqual(currentItemStackSlot0, lastItemStackSlot0)
+                                || !ItemStack.areEqual(currentItemStackSlot1, lastItemStackSlot1)
+                                || !ItemStack.areEqual(cursorStack, lastCursorStack)) {
+                            enchantTryFlag = true;
+                            lastItemStackSlot0 = currentItemStackSlot0.copy();
+                            lastItemStackSlot1 = currentItemStackSlot1.copy();
+                            lastCursorStack = cursorStack.copy();
+                            lastLevelCost = anvilScreenHandler.getLevelCost();
+                            Random random = new Random();
+                            enchantState = random.nextDouble() < enchantmentChance;
+                        }
+
+                        if (!ItemStack.areEqual(resultStack, lastItemStackSlot2)) {
+                            lastItemStackSlot2 = resultStack.copy();
                         }
                     }
-
-                    if (!ItemStack.areEqual(currentItemStackSlot0, lastItemStackSlot0)
-                            || !ItemStack.areEqual(currentItemStackSlot1, lastItemStackSlot1)
-                            || !ItemStack.areEqual(cursorStack, lastCursorStack)) {
-                        enchantTryFlag = true;
-                        lastItemStackSlot0 = currentItemStackSlot0.copy();
-                        lastItemStackSlot1 = currentItemStackSlot1.copy();
-                        lastCursorStack = cursorStack.copy();
-                        Random random = new Random();
-                        enchantState = random.nextDouble() < enchantmentChance;
-                    }
-
-                    if (!ItemStack.areEqual(resultStack, lastItemStackSlot2)) {
-                        lastItemStackSlot2 = resultStack.copy();
-                    }
                 }
-            }
         });
     }
 

@@ -1,6 +1,7 @@
 package net.kemzino.cae;
 
 import net.kemzino.cae.block.ModBlocks;
+import net.kemzino.cae.config.ModConfigs;
 import net.kemzino.cae.event.ModEvents;
 import net.kemzino.cae.item.ModItemGroups;
 import net.kemzino.cae.item.ModItems;
@@ -15,6 +16,8 @@ public class CursedAnvilEnchanting implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
+		ModConfigs.registerConfigs();// requires to register first
 
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
