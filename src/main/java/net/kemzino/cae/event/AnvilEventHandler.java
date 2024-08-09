@@ -1,8 +1,8 @@
 package net.kemzino.cae.event;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.kemzino.cae.CursedAnvilEnchanting;
 import net.kemzino.cae.config.ModConfigs;
+import net.kemzino.cae.global.ModVariables;
 import net.kemzino.cae.service.EnchantmentService;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
@@ -25,7 +25,7 @@ public class AnvilEventHandler {
 
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                if (player.currentScreenHandler instanceof AnvilScreenHandler) {
+                if (player.currentScreenHandler instanceof AnvilScreenHandler && !ModVariables.getInstance().getIsNetheriteAnvilOpen()) {
                     AnvilScreenHandler anvilScreenHandler = (AnvilScreenHandler) player.currentScreenHandler;
                         ItemStack currentItemStackSlot0 = anvilScreenHandler.getSlot(0).getStack();
                         ItemStack currentItemStackSlot1 = anvilScreenHandler.getSlot(1).getStack();
@@ -38,7 +38,7 @@ public class AnvilEventHandler {
                         if (resultStack.isEmpty() && enchantTryFlag && ItemStack.areItemsEqual(cursorStack, lastItemStackSlot2)) {
 
                             enchantTryFlag = false;
-                            if (enchantState && EnchantmentService.isEnchantedBook(lastItemStackSlot1) || lastItemStackSlot1.isEnchantable()) {
+                            if (enchantState && EnchantmentService.isEnchantedBook(lastItemStackSlot1) || !lastItemStackSlot1.getEnchantments().isEmpty()) {
 
                                 Enchantment enchantmentToApply = EnchantmentService.getRandomCurseEnchantmentFromList(EnchantmentService.getApplicableCurseEnchantments(cursorStack));
                                 if (lastLevelCost > ModConfigs.MIN_REQUIRED_LVL_TO_CURSE_ENCHANT) {

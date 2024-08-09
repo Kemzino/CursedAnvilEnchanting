@@ -1,4 +1,4 @@
-package com.kemzino.cae;
+package net.kemzino.cae;
 
 import net.fabricmc.api.ClientModInitializer;
 

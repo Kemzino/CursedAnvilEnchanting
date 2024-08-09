@@ -67,4 +67,5 @@ public class EnchantmentService {
         int index = random.nextInt(curseEnchantments.size());
         return curseEnchantments.get(index);
     }
+
 }
