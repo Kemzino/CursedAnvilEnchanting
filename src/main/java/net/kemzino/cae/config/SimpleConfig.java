@@ -22,6 +22,7 @@ package net.kemzino.cae.config;
  */
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.kemzino.cae.CursedAnvilEnchanting;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -97,7 +98,7 @@ public class SimpleConfig {
      * @return new config request object
      */
     public static ConfigRequest of( String filename ) {
-        Path path = FabricLoader.getInstance().getConfigDir();
+        Path path = FabricLoader.getInstance().getConfigDir().resolve(CursedAnvilEnchanting.MOD_ID);
         return new ConfigRequest( path.resolve( filename + ".properties" ).toFile(), filename );
     }
 

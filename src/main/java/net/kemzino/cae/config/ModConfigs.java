@@ -15,7 +15,7 @@ public class ModConfigs {
         configs = new ModConfigProvider();
         createConfigs();
 
-        CONFIG = SimpleConfig.of(CursedAnvilEnchanting.MOD_ID + "config").provider(configs).request();
+        CONFIG = SimpleConfig.of("main_settings").provider(configs).request();
 
         assignConfigs();
     }

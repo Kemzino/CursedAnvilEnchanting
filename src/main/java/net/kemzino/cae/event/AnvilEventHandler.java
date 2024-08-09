@@ -27,7 +27,6 @@ public class AnvilEventHandler {
             for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                 if (player.currentScreenHandler instanceof AnvilScreenHandler) {
                     AnvilScreenHandler anvilScreenHandler = (AnvilScreenHandler) player.currentScreenHandler;
-                    CursedAnvilEnchanting.LOGGER.info("" + lastLevelCost);
                         ItemStack currentItemStackSlot0 = anvilScreenHandler.getSlot(0).getStack();
                         ItemStack currentItemStackSlot1 = anvilScreenHandler.getSlot(1).getStack();
                         ItemStack resultStack = anvilScreenHandler.getSlot(2).getStack();
@@ -43,7 +42,6 @@ public class AnvilEventHandler {
 
                                 Enchantment enchantmentToApply = EnchantmentService.getRandomCurseEnchantmentFromList(EnchantmentService.getApplicableCurseEnchantments(cursorStack));
                                 if (lastLevelCost > ModConfigs.MIN_REQUIRED_LVL_TO_CURSE_ENCHANT) {
-                                    CursedAnvilEnchanting.LOGGER.info("makaka" + lastLevelCost);
                                     cursorStack.addEnchantment(enchantmentToApply, 1);
                                 }
 
