@@ -67,6 +67,9 @@ public class AnvilEventHandler {
                         }
                     }
                 }
+            if (ModVariables.getInstance().getIsNetheriteAnvilOpen()) {
+                lastLevelCost = (int) (lastLevelCost * 0.5);
+            }
         });
     }
 

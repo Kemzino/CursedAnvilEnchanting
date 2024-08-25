@@ -3,7 +3,8 @@
 	"package": "net.kemzino.cae.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"AnvilScreenMixin"
+		"AnvilScreenMixin",
+		"AnvilScreenHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
