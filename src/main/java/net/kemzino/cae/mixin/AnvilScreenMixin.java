@@ -1,6 +1,7 @@
 package net.kemzino.cae.mixin;
 
 import net.kemzino.cae.config.ModConfigs;
+import net.kemzino.cae.event.AnvilEventHandler;
 import net.kemzino.cae.global.ModVariables;
 import net.kemzino.cae.service.EnchantmentService;
 import net.minecraft.client.MinecraftClient;
@@ -61,6 +62,9 @@ public abstract class AnvilScreenMixin extends HandledScreen<AnvilScreenHandler>
 
             int originalX = 83 * 2 - this.textRenderer.getWidth(Text.translatable("container.repair.cost", levelCost));
             int originalY = 69;
+            if(AnvilEventHandler.guarateeCurse) {
+                mixedColor = 0;
+            }
 
             MutableText expCostText = Text.translatable("container.repair.cost", levelCost);
 
